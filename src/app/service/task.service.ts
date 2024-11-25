@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Task } from '../model/task.model';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  constructor() {
-    this.loadTasksFromLocalStorage();
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadTasksFromLocalStorage();
+    }
   }
 
   tasks: Task[] = [
@@ -36,6 +39,7 @@ export class TaskService {
   ];
 
   private nextId = 4;
+
   private saveTasksToLocalStorage(): void {
     localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
@@ -92,9 +96,11 @@ export class TaskService {
     this.nextId = newId + 1;
     return newTask;
   }
+
   getTasks(): Task[] {
     return this.tasks;
   }
+
   getTask(id: number): Task | undefined {
     return this.tasks.find((task) => task.id === id);
   }
