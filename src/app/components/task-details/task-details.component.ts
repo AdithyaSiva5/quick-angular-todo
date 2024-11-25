@@ -1,31 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from '../../model/task.model';
 import { TaskService } from '../../service/task.service';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from 'express';
+import { Task } from '../../model/task.model';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-task-details',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './task-details.component.html',
   styleUrl: './task-details.component.css',
-  standalone: true,
 })
 export class TaskDetailsComponent implements OnInit {
   task?: Task;
 
   constructor(
-    private _taskService: TaskService,
-    private _route: ActivatedRoute,
-    private _router: Router
+    private taskService: TaskService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    const id = this._route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       const taskId = +id;
-      this.task = this._taskService.getTask(taskId);
+      this.task = this.taskService.getTask(taskId);
+      console.log(this.task);
     }
   }
 }

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../../service/task.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TaskService } from '../../service/task.service';
 import { Task } from '../../model/task.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-edit',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task-edit.component.html',
   styleUrl: './task-edit.component.css',
-  standalone: true,
 })
 export class TaskEditComponent implements OnInit {
   taskName: string = '';
@@ -20,17 +20,17 @@ export class TaskEditComponent implements OnInit {
   taskAdditional?: string = '';
 
   constructor(
-    private _taskService: TaskService,
-    private _router: Router,
-    private _route: ActivatedRoute
+    private taskService: TaskService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this._route.paramMap.subscribe((params) => {
+    this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
         this.taskId = +id;
-        const task = this._taskService.getTask(this.taskId);
+        const task = this.taskService.getTask(this.taskId);
         if (task) {
           this.taskName = task.title;
           this.taskDescription = task.description;
@@ -40,7 +40,8 @@ export class TaskEditComponent implements OnInit {
       }
     });
   }
-  editTask() {
+
+  edittask() {
     const updatedTask: Task = {
       id: this.taskId as number,
       title: this.taskName,
@@ -48,8 +49,9 @@ export class TaskEditComponent implements OnInit {
       status: this.taskStatus,
       additionalInfo: this.taskAdditional,
     };
-    this._taskService.updateTask(updatedTask);
 
-    this._router.navigate(['']);
+    this.taskService.updateTask(updatedTask);
+
+    this.router.navigate(['']);
   }
 }
