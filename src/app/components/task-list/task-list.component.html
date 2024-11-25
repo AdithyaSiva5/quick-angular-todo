@@ -1,0 +1,15 @@
+<div class="list-container">
+    <div *ngFor="let t of tasks" class="list-body">
+      <div class="title-status">
+        <h2>{{ t.title }}</h2>
+        <h4 [appStatusHighlight]="t.status">{{ t.status }}</h4>
+      </div>
+      <p>{{ t.description }}</p>
+      <div class="edit-del">
+        <button (click)="edittask(t.id)">Edit</button>
+        <button (click)="detailstask(t.id)">Details</button>
+        <button (click)="deletetask(t.id)">Delete</button>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,22 @@
+<div class="detail-body" *ngIf="task">
+  <h1>Detail of Task number {{ task.id }}</h1>
+  <div>
+    <h3>Name of Task:</h3>
+    <p>{{ task.title }}</p>
+  </div>
+
+  <div>
+    <h3>Description:</h3>
+    <p>{{ task.description }}</p>
+  </div>
+
+  <div>
+    <h3>Status:</h3>
+    <p>{{ task.status }}</p>
+  </div>
+
+  <div *ngIf="task.additionalInfo">
+    <h4>Additional Information:</h4>
+    <p>{{ task.additionalInfo }}</p>
+  </div>
+</div>
