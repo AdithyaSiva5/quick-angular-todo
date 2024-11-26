@@ -1,15 +1,12 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Task } from '../model/task.model';
-import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    if (isPlatformBrowser(this.platformId)) {
-      this.loadTasksFromLocalStorage();
-    }
+  constructor() {
+    this.loadTasksFromLocalStorage();
   }
 
   tasks: Task[] = [
@@ -83,7 +80,15 @@ export class TaskService {
     }
   }
 
+  // addTask(task: Omit<Task, 'id'>): Task {
+  //   const newTask: Task = { id: this.nextId++, ...task };
+  //   this.tasks.push(newTask);
+  //   this.saveTasksToLocalStorage();
+  //   return newTask;
+  // }
+
   addTask(task: Omit<Task, 'id'>): Task {
+    // Findinglowest available id
     const existingIds = this.tasks.map((t) => t.id);
     let newId = 1;
     while (existingIds.includes(newId)) {

@@ -1,4 +1,12 @@
 <nav class="header-body">
+  <h1>TaskTrackerApp</h1>
+  <div class="btns">
+    <button [routerLink]="'/tasks'">Task List</button>
+    <button (click)="gotoform()">Add Task</button>
+  </div>
+</nav>
+
+<nav class="header-body">
   <h1>QuickTrackerApp</h1>
   <div class="btns">
     <button [routerLink]="'/tasks'">Task List</button>

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { TaskService } from '../../service/task.service';
 import { Router } from '@angular/router';
+import { TaskService } from '../../service/task.service';
 import { Task } from '../../model/task.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-form',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css',
