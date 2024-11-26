@@ -1,47 +1,56 @@
-<div class="add-task-div">
-  <h1 class="add-h1">Add a Task</h1>
-  <form class="form-body" (ngSubmit)="edittask()">
-    <div class="inpt">
-      <label for="name">Task Name :</label>
-      <input
-        type="text"
-        id="name"
-        [(ngModel)]="taskName"
-        name="taskName"
-        required
-      />
-    </div>
+<div class="max-w-2xl mx-auto p-6 md:p-8">
+  <div
+    class="bg-white/90 backdrop-blur-sm rounded-2xl p-8 border border-emerald-100 shadow-[0_4px_20px_-4px_rgba(16,185,129,0.1)]"
+  >
+    <h1
+      class="text-2xl font-bold text-emerald-900 mb-8 pb-4 border-b border-emerald-100 flex items-center gap-3"
+    >
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+        />
+      </svg>
+      Edit Task
+    </h1>
+    <form class="space-y-6" (ngSubmit)="edittask()">
+      <!-- Same form fields as Add Task but with different accent colors -->
+      <div class="space-y-2">
+        <label for="name" class="block text-emerald-800 font-medium pl-1"
+          >Task Name</label
+        >
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="taskName"
+          name="taskName"
+          required
+          class="w-full px-5 py-3 rounded-lg bg-emerald-50/50 border-2 border-emerald-200 focus:border-teal-400 focus:ring-0 placeholder-emerald-300 text-emerald-800 transition-colors"
+        />
+      </div>
 
-    <div class="inpt">
-      <label for="desc">Description :</label>
-      <input
-        type="text"
-        id="desc"
-        [(ngModel)]="taskDescription"
-        name="taskDescription"
-        required
-      />
-    </div>
+      <!-- Repeat other form fields with same styling -->
 
-    <div class="opt">
-      <label>Status :</label>
-      <select name="status" [(ngModel)]="taskStatus">
-        <option value="Done">Done</option>
-        <option value="To Do">To Do</option>
-        <option value="In Progress">In Progress</option>
-      </select>
-    </div>
-
-    <div class="inpt">
-      <label for="info">Additional :</label>
-      <input
-        type="text"
-        id="info"
-        [(ngModel)]="taskAdditional"
-        name="taskAdditional"
-        required
-      />
-    </div>
-    <button type="submit" class="btn">UPDATE</button>
-  </form>
+      <button
+        type="submit"
+        class="w-full py-3.5 rounded-lg bg-gradient-to-br from-teal-600 to-emerald-600 text-white font-medium hover:from-teal-700 hover:to-emerald-700 transform hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+          />
+        </svg>
+        Update Task
+      </button>
+    </form>
+  </div>
 </div>

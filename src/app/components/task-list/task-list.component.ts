@@ -55,4 +55,7 @@ export class TaskListComponent implements OnInit {
   detailstask(id: number): void {
     this.router.navigate([`/details/${id}`]);
   }
+  gotoform(): void {
+    this.router.navigate(['/form']);
+  }
 }

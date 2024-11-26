@@ -1,8 +1,37 @@
-<nav class="header-body">
-  <h1>TaskTrackerApp</h1>
-  <div class="btns">
-    <button [routerLink]="'/tasks'">Task List</button>
-    <button (click)="gotoform()">Add Task</button>
+<nav
+  class="bg-emerald-800 bg-opacity-95 border-b-4 border-emerald-600 px-6 py-4 shadow-lg"
+>
+  <div
+    class="max-w-6xl mx-auto flex flex-wrap gap-4 justify-between items-center"
+  >
+    <h1 class="text-3xl font-bold text-green-50 flex items-center gap-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-8 w-8"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+      >
+        <path
+          d="M6 3v12c0 4.97 4.03 6 8 6s8-1.03 8-6V3c-4 0-8 .03-8 3-0-2.97-4-3-8-3z"
+        />
+      </svg>
+      Todo
+    </h1>
+    <div class="flex gap-4">
+      <button
+        [routerLink]="'/tasks'"
+        class="px-6 py-2.5 rounded-lg bg-emerald-700 text-emerald-50 hover:bg-emerald-600 font-medium border-2 border-emerald-600 hover:border-emerald-500 transition-all duration-300"
+      >
+        Task List
+      </button>
+      <button
+        (click)="gotoform()"
+        class="px-6 py-2.5 rounded-lg bg-green-700 text-green-50 hover:bg-green-600 font-medium border-2 border-green-600 hover:border-green-500 transition-all duration-300"
+      >
+        Add Task
+      </button>
+    </div>
   </div>
 </nav>
 
