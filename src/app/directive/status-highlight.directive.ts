@@ -16,8 +16,8 @@ export class StatusHighlightDirective {
         this.el.nativeElement.borderColor = 'red';
         break;
       case 'In Progress':
-        this.el.nativeElement.style.color = 'yellow';
-        this.el.nativeElement.borderColor = 'yellow';
+        this.el.nativeElement.style.color = 'blue';
+        this.el.nativeElement.borderColor = 'blue';
         break;
       case 'Done':
         this.el.nativeElement.style.color = 'green';

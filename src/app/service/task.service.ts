@@ -79,16 +79,7 @@ export class TaskService {
       this.saveTasksToLocalStorage();
     }
   }
-
-  // addTask(task: Omit<Task, 'id'>): Task {
-  //   const newTask: Task = { id: this.nextId++, ...task };
-  //   this.tasks.push(newTask);
-  //   this.saveTasksToLocalStorage();
-  //   return newTask;
-  // }
-
   addTask(task: Omit<Task, 'id'>): Task {
-    // Findinglowest available id
     const existingIds = this.tasks.map((t) => t.id);
     let newId = 1;
     while (existingIds.includes(newId)) {
