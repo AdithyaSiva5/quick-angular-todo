@@ -17,8 +17,7 @@
       </svg>
       Edit Task
     </h1>
-    <form class="space-y-6" (ngSubmit)="edittask()">
-      <!-- Same form fields as Add Task but with different accent colors -->
+    <form class="form-body" (ngSubmit)="edittask()">
       <div class="space-y-2">
         <label for="name" class="block text-emerald-800 font-medium pl-1"
           >Task Name</label
@@ -29,18 +28,56 @@
           [(ngModel)]="taskName"
           name="taskName"
           required
-          class="w-full px-5 py-3 rounded-lg bg-emerald-50/50 border-2 border-emerald-200 focus:border-teal-400 focus:ring-0 placeholder-emerald-300 text-emerald-800 transition-colors"
+          class="w-full px-4 py-2 rounded-lg bg-emerald-50/50 border-2 border-emerald-200 focus:border-emerald-400 focus:ring-0 text-emerald-800"
         />
       </div>
 
-      <!-- Repeat other form fields with same styling -->
+      <div class="space-y-2">
+        <label for="desc" class="block text-emerald-800 font-medium pl-1"
+          >Description</label
+        >
+        <input
+          type="text"
+          id="desc"
+          [(ngModel)]="taskDescription"
+          name="taskDescription"
+          required
+          class="w-full px-4 py-2 rounded-lg bg-emerald-50/50 border-2 border-emerald-200 focus:border-emerald-400 focus:ring-0 text-emerald-800"
+        />
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-emerald-800 font-medium pl-1">Status</label>
+        <select
+          [(ngModel)]="taskStatus"
+          name="status"
+          class="w-full px-4 py-2 rounded-lg bg-emerald-50/50 border-2 border-emerald-200 focus:border-emerald-400 focus:ring-0 text-emerald-800"
+        >
+          <option value="Done">Done</option>
+          <option value="To Do">To Do</option>
+          <option value="In Progress">In Progress</option>
+        </select>
+      </div>
+
+      <div class="space-y-2">
+        <label for="info" class="block text-emerald-800 font-medium pl-1"
+          >Additional Info</label
+        >
+        <input
+          type="text"
+          id="info"
+          [(ngModel)]="taskAdditional"
+          name="taskAdditional"
+          class="w-full px-4 py-2 rounded-lg bg-emerald-50/50 border-2 border-emerald-200 focus:border-emerald-400 focus:ring-0 text-emerald-800"
+        />
+      </div>
 
       <button
         type="submit"
-        class="w-full py-3.5 rounded-lg bg-gradient-to-br from-teal-600 to-emerald-600 text-white font-medium hover:from-teal-700 hover:to-emerald-700 transform hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+        class="w-full mt-4 py-2.5 rounded-lg bg-gradient-to-br from-emerald-600 to-green-600 text-white font-medium hover:from-emerald-700 hover:to-green-700 transition-all flex items-center justify-center gap-2"
       >
         <svg
-          class="w-5 h-5"
+          class="w-4 h-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

@@ -1,12 +1,12 @@
-<!-- Task List with Empty State -->
+
 <div class="p-6 md:p-8">
-  <!-- Show this when there are no tasks -->
+
   <div
     *ngIf="!tasks || tasks.length === 0"
     class="max-w-5xl mx-auto bg-white/80 backdrop-blur-sm rounded-xl p-8 border border-emerald-100 shadow-[0_4px_20px_-4px_rgba(16,185,129,0.1)] text-center"
   >
     <div class="flex flex-col items-center gap-4">
-      <!-- Optional: Add a leaf or nature icon -->
+
       <svg
         class="w-16 h-16 text-emerald-300"
         fill="none"
@@ -41,7 +41,6 @@
     </div>
   </div>
 
-  <!-- Existing task list - only shown when there are tasks -->
   <div *ngIf="tasks && tasks.length > 0" class="grid gap-6 max-w-5xl mx-auto">
     <div
       *ngFor="let t of tasks"

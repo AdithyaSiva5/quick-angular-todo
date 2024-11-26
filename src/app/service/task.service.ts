@@ -102,9 +102,9 @@ export class TaskService {
   }
 
   updateTask(updatedTask: Task): void {
-    const i = this.tasks.findIndex((t) => t.id === updatedTask.id);
-    if (i !== 1) {
-      this.tasks[i] = updatedTask;
+    const index = this.tasks.findIndex((t) => t.id === updatedTask.id);
+    if (index !== -1) {
+      this.tasks[index] = updatedTask;
       this.saveTasksToLocalStorage();
     }
   }
