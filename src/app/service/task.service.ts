@@ -1,120 +1,62 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../model/task.model';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  constructor() {
-    this.loadTasksFromLocalStorage();
+  private apiUrl = 'http://localhost:3000/api/tasks';
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  tasks$ = this.tasksSubject.asObservable();
+
+  constructor(private http: HttpClient) {
+    this.loadTasks();
   }
 
-  tasks: Task[] = [
-    {
-      id: 1,
-      title: 'Task 1',
-      description: 'This is task number 1',
-      status: 'Done',
-      additionalInfo: 'This is task number 1 which is done but review it.',
-    },
-    {
-      id: 2,
-      title: 'Task 2',
-      description: 'This is task number 2',
-      status: 'In Progress',
-      additionalInfo:
-        'This is task number 2 which is in progress and needs to be completed asap.',
-    },
-    {
-      id: 3,
-      title: 'Task 3',
-      description: 'This is task number 3',
-      status: 'To Do',
-      additionalInfo:
-        'This is task number 3 start next week and needs to be completed asap.',
-    },
-  ];
-
-  private nextId = 4;
-
-  private saveTasksToLocalStorage(): void {
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+  private loadTasks(): void {
+    this.http.get<Task[]>(this.apiUrl).subscribe(
+      tasks => this.tasksSubject.next(tasks)
+    );
   }
 
-  private loadTasksFromLocalStorage(): void {
-    const storedTasks = localStorage.getItem('tasks');
-    if (storedTasks) {
-      this.tasks = JSON.parse(storedTasks);
-
-      this.nextId = this.tasks.length
-        ? Math.max(...this.tasks.map((t) => t.id)) + 1
-        : 1;
-    } else {
-      this.tasks = [
-        {
-          id: 1,
-          title: 'Task 1',
-          description: 'This is task number 1',
-          status: 'Done',
-          additionalInfo: 'This is task number 1 which is done but review it.',
-        },
-        {
-          id: 2,
-          title: 'Task 2',
-          description: 'This is task number 2',
-          status: 'In Progress',
-          additionalInfo:
-            'This is task number 2 which is in progress and needs to be completed asap.',
-        },
-        {
-          id: 3,
-          title: 'Task 3',
-          description: 'This is task number 3',
-          status: 'To Do',
-          additionalInfo:
-            'This is task number 3 start next week and needs to be completed asap.',
-        },
-      ];
-      this.nextId = 4;
-      this.saveTasksToLocalStorage();
-    }
-  }
-  addTask(task: Omit<Task, 'id'>): Task {
-    const existingIds = this.tasks.map((t) => t.id);
-    let newId = 1;
-    while (existingIds.includes(newId)) {
-      newId++;
-    }
-
-    const newTask: Task = { id: newId, ...task };
-    this.tasks.push(newTask);
-    this.saveTasksToLocalStorage();
-    this.nextId = newId + 1;
-    return newTask;
+  getTasks(): Observable<Task[]> {
+    return this.tasks$;
   }
 
-  getTasks(): Task[] {
-    return this.tasks;
+  getTask(id: number): Observable<Task> {
+    return this.http.get<Task>(`${this.apiUrl}/${id}`);
   }
 
-  getTask(id: number): Task | undefined {
-    return this.tasks.find((task) => task.id === id);
+  addTask(task: Omit<Task, 'id'>): Observable<Task> {
+    return this.http.post<Task>(this.apiUrl, task).pipe(
+      tap(newTask => {
+        const currentTasks = this.tasksSubject.value;
+        this.tasksSubject.next([...currentTasks, newTask]);
+      })
+    );
   }
 
-  updateTask(updatedTask: Task): void {
-    const index = this.tasks.findIndex((t) => t.id === updatedTask.id);
-    if (index !== -1) {
-      this.tasks[index] = updatedTask;
-      this.saveTasksToLocalStorage();
-    }
+  updateTask(updatedTask: Task): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/${updatedTask.id}`, updatedTask).pipe(
+      tap(task => {
+        const currentTasks = this.tasksSubject.value;
+        const updatedTasks = currentTasks.map(t => 
+          t.id === task.id ? task : t
+        );
+        this.tasksSubject.next(updatedTasks);
+      })
+    );
   }
 
-  deleteTask(id: number): void {
-    this.tasks = this.tasks.filter((t) => t.id !== id);
-    this.reorderTaskIds();
-    this.saveTasksToLocalStorage();
-  }
-  private reorderTaskIds(): void {
-    this.tasks = this.tasks.map((task, index) => ({ ...task, id: index + 1 }));
+  deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      tap(() => {
+        const currentTasks = this.tasksSubject.value;
+        const filteredTasks = currentTasks.filter(task => task.id !== id);
+        this.tasksSubject.next(filteredTasks);
+      })
+    );
   }
 }

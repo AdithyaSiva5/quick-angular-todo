@@ -27,8 +27,8 @@ export class TaskFormComponent {
       additionalInfo: this.taskAdditional,
     };
 
-    this.taskService.addTask(newTask);
-
-    this.router.navigate(['']);
+    this.taskService.addTask(newTask).subscribe(() => {
+      this.router.navigate(['']);
+    });
   }
 }

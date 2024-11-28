@@ -30,13 +30,12 @@ export class TaskEditComponent implements OnInit {
       const id = params.get('id');
       if (id) {
         this.taskId = +id;
-        const task = this.taskService.getTask(this.taskId);
-        if (task) {
+        this.taskService.getTask(this.taskId).subscribe(task => {
           this.taskName = task.title;
           this.taskDescription = task.description;
           this.taskStatus = task.status;
           this.taskAdditional = task.additionalInfo;
-        }
+        });
       }
     });
   }
@@ -50,8 +49,8 @@ export class TaskEditComponent implements OnInit {
       additionalInfo: this.taskAdditional,
     };
 
-    this.taskService.updateTask(updatedTask);
-
-    this.router.navigate(['']);
+    this.taskService.updateTask(updatedTask).subscribe(() => {
+      this.router.navigate(['']);
+    });
   }
 }
